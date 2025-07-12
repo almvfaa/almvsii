@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Home, LogOut } from 'lucide-react';
-import { NAV_LINKS, ROLE_ICONS, type Role } from '@/lib/nav-links';
+import { NAV_LINKS, ROLE_ICONS, ROLE_NAMES, type Role } from '@/lib/nav-links';
 import React from 'react';
 
 type DashboardLayoutProps = {
@@ -37,6 +37,7 @@ export function DashboardLayout({ children, role }: DashboardLayoutProps) {
   const pathname = usePathname();
   const navLinks = NAV_LINKS[role];
   const RoleIcon = ROLE_ICONS[role];
+  const roleName = ROLE_NAMES[role];
 
   return (
     <SidebarProvider>
@@ -47,7 +48,7 @@ export function DashboardLayout({ children, role }: DashboardLayoutProps) {
               <RoleIcon className="h-5 w-5" />
             </div>
             <span className="font-headline text-lg font-semibold text-primary">
-              {role.charAt(0).toUpperCase() + role.slice(1)}
+              {roleName}
             </span>
           </div>
         </SidebarHeader>
@@ -75,10 +76,10 @@ export function DashboardLayout({ children, role }: DashboardLayoutProps) {
         <SidebarFooter>
            <SidebarMenu>
             <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip={{children: "Back to Role Selection", className: 'bg-primary text-primary-foreground'}}>
+                <SidebarMenuButton asChild tooltip={{children: "Volver a Selección de Rol", className: 'bg-primary text-primary-foreground'}}>
                     <Link href="/">
                         <Home />
-                        <span>Home</span>
+                        <span>Inicio</span>
                     </Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>
@@ -105,7 +106,7 @@ function UserMenu() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-9 w-9 rounded-full">
           <Avatar className="h-9 w-9 border">
-            <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
+            <AvatarImage src="https://placehold.co/100x100.png" alt="Usuario" data-ai-hint="user avatar" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
         </Button>
@@ -113,15 +114,15 @@ function UserMenu() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">User</p>
-            <p className="text-xs leading-none text-muted-foreground">user@example.com</p>
+            <p className="text-sm font-medium leading-none">Usuario</p>
+            <p className="text-xs leading-none text-muted-foreground">usuario@example.com</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href="/">
             <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
+            <span>Cerrar sesión</span>
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -9,7 +9,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 
-const roles = ['admin', 'dietology', 'warehouse', 'legal', 'supplier'];
+const roles: { [key: string]: string } = {
+  admin: 'Admin',
+  dietology: 'Dietología',
+  warehouse: 'Almacén',
+  legal: 'Legal',
+  supplier: 'Proveedor',
+};
 
 export default function LoginPage() {
   const [role, setRole] = useState<string>('');
@@ -35,15 +41,15 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent className="space-y-6 p-8">
           <div className="space-y-2">
-            <Label htmlFor="role-select">Select Your Role</Label>
+            <Label htmlFor="role-select">Selecciona tu Rol</Label>
             <Select onValueChange={setRole} value={role}>
               <SelectTrigger id="role-select" className="w-full">
-                <SelectValue placeholder="Choose a role to continue..." />
+                <SelectValue placeholder="Elige un rol para continuar..." />
               </SelectTrigger>
               <SelectContent>
-                {roles.map((r) => (
-                  <SelectItem key={r} value={r} className="capitalize">
-                    {r.charAt(0).toUpperCase() + r.slice(1)}
+                {Object.entries(roles).map(([key, value]) => (
+                  <SelectItem key={key} value={key} className="capitalize">
+                    {value}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -51,7 +57,7 @@ export default function LoginPage() {
           </div>
           <Button onClick={handleLogin} disabled={!role} className="w-full">
             <LogIn className="mr-2 h-4 w-4" />
-            Enter Dashboard
+            Entrar al Panel
           </Button>
         </CardContent>
       </Card>

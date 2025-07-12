@@ -9,40 +9,40 @@ export default function DietologyDashboard() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card className="col-span-1 md:col-span-2 lg:col-span-3">
           <CardHeader>
-            <CardTitle className="font-headline">Welcome, Dietology Team!</CardTitle>
-            <CardDescription>Manage menus and patient dietary schedules from here.</CardDescription>
+            <CardTitle className="font-headline">¡Bienvenido, equipo de Dietología!</CardTitle>
+            <CardDescription>Gestiona menús y horarios de dietas de pacientes desde aquí.</CardDescription>
           </CardHeader>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><Utensils />Menu Planner</CardTitle>
-            <CardDescription>Create and manage menu templates for breakfast, lunch, and dinner.</CardDescription>
+            <CardTitle className="flex items-center gap-2"><Utensils />Planificador de Menús</CardTitle>
+            <CardDescription>Crea y gestiona plantillas de menús para desayuno, almuerzo y cena.</CardDescription>
           </CardHeader>
           <CardContent>
             <Button className="w-full">
-              <PlusCircle className="mr-2 h-4 w-4" /> Create New Menu
+              <PlusCircle className="mr-2 h-4 w-4" /> Crear Nuevo Menú
             </Button>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><ClipboardList />Schedule Consolidation</CardTitle>
-            <CardDescription>Create and view monthly schedules. They will be auto-consolidated for the warehouse.</CardDescription>
+            <CardTitle className="flex items-center gap-2"><ClipboardList />Consolidación de Horarios</CardTitle>
+            <CardDescription>Crea y visualiza horarios mensuales. Se consolidarán automáticamente para el almacén.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="w-full" variant="secondary">View Schedules</Button>
+            <Button className="w-full" variant="secondary">Ver Horarios</Button>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><TrendingUp />Analytics</CardTitle>
-            <CardDescription>Insights on menu popularity and nutritional data.</CardDescription>
+            <CardTitle className="flex items-center gap-2"><TrendingUp />Analíticas</CardTitle>
+            <CardDescription>Información sobre la popularidad de los menús y datos nutricionales.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="w-full" variant="outline">View Reports</Button>
+            <Button className="w-full" variant="outline">Ver Informes</Button>
           </CardContent>
         </Card>
       </div>
