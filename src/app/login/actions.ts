@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { SignJWT, jwtVerify } from 'jose';
-import { dbAdmin } from '@/lib/firebase-admin';
+import { dbAdmin, authAdmin } from '@/lib/firebase-admin';
 
 const secretKey = process.env.SESSION_SECRET || 'your-fallback-secret-key';
 const key = new TextEncoder().encode(secretKey);
@@ -38,14 +38,14 @@ export async function signup(prevState: string | undefined, formData: FormData) 
 
   try {
     // Create user in Firebase Auth
-    const userRecord = await dbAdmin.auth().createUser({
+    const userRecord = await authAdmin.createUser({
       email,
       password,
       displayName: email, // Or a name field if you have one
     });
 
     // Optionally, set a custom claim for roles
-    await dbAdmin.auth().setCustomUserClaims(userRecord.uid, { role: 'user' }); // Default role
+    await authAdmin.setCustomUserClaims(userRecord.uid, { role: 'user' }); // Default role
 
   } catch (error: any) {
     if (error.code === 'auth/email-already-exists') {
@@ -69,7 +69,7 @@ export async function authenticate(prevState: string | undefined, formData: Form
     // For a pure server-side flow, we can create a custom token and use it to simulate a session.
     // However, a simpler approach for now is to just validate the user exists for the purpose of creating a session cookie.
     
-    const user = await dbAdmin.auth().getUserByEmail(email);
+    const user = await authAdmin.getUserByEmail(email);
 
     // This doesn't actually check the password, which is a limitation of a pure server-side flow
     // without client interaction. For a real app, you would use the client SDK to sign in and post
@@ -87,6 +87,7 @@ export async function authenticate(prevState: string | undefined, formData: Form
     if (e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential') {
       return 'Invalid email or password.';
     }
+    console.error('Authentication error:', e);
     return 'An error occurred during login.';
   }
   

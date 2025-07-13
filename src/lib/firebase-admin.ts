@@ -1,26 +1,41 @@
 import admin from 'firebase-admin';
+import path from 'path';
+import fs from 'fs';
 
-// This configuration is for SERVER-SIDE operations only.
-// It uses environment variables that are securely available on the server.
+// Check if we are in production
+const isProduction = process.env.NODE_ENV === 'production';
 
-// Check if the app is already initialized to prevent errors
 if (!admin.apps.length) {
-  // In a deployed Google Cloud environment (like App Hosting),
-  // the SDK automatically finds the service account credentials.
-  // For local development, you need to provide a service account key
-  // via the GOOGLE_APPLICATION_CREDENTIALS environment variable.
-  const credential = process.env.GOOGLE_APPLICATION_CREDENTIALS
-    ? admin.credential.cert(process.env.GOOGLE_APPLICATION_CREDENTIALS)
-    : admin.credential.applicationDefault();
+  let credential;
+
+  if (isProduction) {
+    // In production (App Hosting), credentials are automatically discovered.
+    credential = admin.credential.applicationDefault();
+  } else {
+    // In development, construct an absolute path to the service account key.
+    const serviceAccountPath = path.join(process.cwd(), 'service-account-key.json');
+
+    try {
+        // Check if the file exists before requiring it. This gives a clearer error.
+        if (!fs.existsSync(serviceAccountPath)) {
+            throw new Error(`Service account key file not found at path: ${serviceAccountPath}`);
+        }
+        const serviceAccount = require(serviceAccountPath);
+        credential = admin.credential.cert(serviceAccount);
+    } catch (error: any) {
+        console.error('FATAL ERROR: Could not load Firebase Admin SDK credentials.');
+        console.error('Ensure `service-account-key.json` is in the project root.');
+        console.error('Detailed error:', error.message);
+        throw new Error('Could not initialize Firebase Admin SDK. Check server logs.');
+    }
+  }
 
   admin.initializeApp({
-    credential,
-    // You can also add your databaseURL here if needed,
-    // though it's often not required with the latest SDKs.
-    // databaseURL: `https://${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}.firebaseio.com`
+    credential
   });
 }
 
 const dbAdmin = admin.firestore();
+const authAdmin = admin.auth();
 
-export { dbAdmin };
+export { dbAdmin, authAdmin };
