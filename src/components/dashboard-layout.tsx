@@ -1,7 +1,7 @@
 // src/components/dashboard-layout.tsx
 import React from 'react';
 import Sidebar from '@/components/ui/sidebar';
-import { navLinks } from '@/lib/nav-links';
+import { NAV_LINKS } from '@/lib/nav-links';
 import { logout } from '@/app/login/actions'; // Import the server action
 
 // A new component for the logout button
@@ -25,7 +25,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="flex min-h-screen">
-      <Sidebar navLinks={navLinks}>
+      <Sidebar navLinks={NAV_LINKS}>
         {/* We can add the logout button at the bottom of the sidebar */}
         <div className="mt-auto">
            <LogoutButton />

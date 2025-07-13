@@ -1,10 +1,10 @@
-import { DashboardLayout } from '@/components/dashboard-layout';
+import DashboardLayout from '@/components/dashboard-layout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Users, Gavel, Handshake, AreaChart, Warehouse, Utensils } from 'lucide-react';
 
 export default function AdminDashboard() {
   return (
-    <DashboardLayout role="admin">
+    <DashboardLayout>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card className="col-span-1 lg:col-span-3">
           <CardHeader>

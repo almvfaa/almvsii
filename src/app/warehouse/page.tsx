@@ -1,11 +1,11 @@
-import { DashboardLayout } from '@/components/dashboard-layout';
+import DashboardLayout from '@/components/dashboard-layout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { PackagePlus, PackageMinus, PackageX, CalendarDays, AlertTriangle, MessageSquareWarning } from 'lucide-react';
 
 export default function WarehouseDashboard() {
   return (
-    <DashboardLayout role="warehouse">
+    <DashboardLayout>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card className="col-span-1 md:col-span-2 lg:col-span-3">
           <CardHeader>

@@ -1,11 +1,11 @@
-import { DashboardLayout } from '@/components/dashboard-layout';
+import DashboardLayout from '@/components/dashboard-layout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { PlusCircle, Utensils, ClipboardList, TrendingUp } from 'lucide-react';
 
 export default function DietologyDashboard() {
   return (
-    <DashboardLayout role="dietology">
+    <DashboardLayout>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card className="col-span-1 md:col-span-2 lg:col-span-3">
           <CardHeader>

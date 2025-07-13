@@ -1,11 +1,11 @@
-import { DashboardLayout } from '@/components/dashboard-layout';
+import DashboardLayout from '@/components/dashboard-layout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileText, Bell } from 'lucide-react';
 
 export default function SupplierDashboard() {
   return (
-    <DashboardLayout role="supplier">
+    <DashboardLayout>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Card className="col-span-1 md:col-span-2">
           <CardHeader>
