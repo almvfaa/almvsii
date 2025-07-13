@@ -2,7 +2,7 @@
 import React from 'react';
 import Sidebar from '@/components/ui/sidebar';
 import { NAV_LINKS } from '@/lib/nav-links';
-import { logout } from '@/app/login/actions'; // Import the server action
+import { logout } from '@/lib/session'; // Import from the new session utility
 
 // A new component for the logout button
 function LogoutButton() {
@@ -26,7 +26,6 @@ export default function DashboardLayout({
   return (
     <div className="flex min-h-screen">
       <Sidebar navLinks={NAV_LINKS}>
-        {/* We can add the logout button at the bottom of the sidebar */}
         <div className="mt-auto">
            <LogoutButton />
         </div>

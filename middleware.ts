@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { decrypt } from '@/app/login/actions';
+import { decrypt } from '@/lib/session'; // Use the new, clean session utility
 import { cookies } from 'next/headers';
 
 // 1. Specify protected and public routes
-const protectedRoutes = ['/admin', '/warehouse', '/dietology', '/supplier', '/legal'];
+const protectedRoutes = ['/admin', '/warehouse', '/dietology', '/supplier', '/legal', '/'];
 const publicRoutes = ['/login', '/signup'];
 
 export default async function middleware(req: NextRequest) {
@@ -27,11 +27,7 @@ export default async function middleware(req: NextRequest) {
 
   // If the user is authenticated and tries to access a public route (like login),
   // redirect them to the home page.
-  if (
-    isPublicRoute &&
-    session?.uid &&
-    !req.nextUrl.pathname.startsWith('/')
-  ) {
+  if (isPublicRoute && session?.uid) {
     return NextResponse.redirect(new URL('/', req.nextUrl));
   }
 
