@@ -1,20 +1,45 @@
+// This is now a Server Component
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { dbAdmin } from "@/lib/firebase-admin"; // We use the admin SDK here
 
-export default function UsersPage() {
-  const users = [
-    { id: 'USR001', name: 'Alice Johnson', email: 'alice@example.com', role: 'Admin', status: 'Active' },
-    { id: 'USR002', name: 'Bob Williams', email: 'bob@example.com', role: 'Warehouse Manager', status: 'Active' },
-    { id: 'USR003', name: 'Charlie Brown', email: 'charlie@example.com', role: 'Supplier', status: 'Inactive' },
-    { id: 'USR004', name: 'Diana Miller', email: 'diana@example.com', role: 'Dietologist', status: 'Active' },
-    { id: 'USR005', name: 'Ethan Davis', email: 'ethan@example.com', role: 'Legal Team', status: 'Active' },
-  ];
+// Define the User type based on our data structure
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+}
+
+// This async function fetches data directly on the server before the page is rendered
+async function getUsers(): Promise<User[]> {
+  const usersCollection = dbAdmin.collection('users');
+  const snapshot = await usersCollection.get();
+  
+  if (snapshot.empty) {
+    console.log('No matching documents.');
+    return [];
+  }
+
+  const users: User[] = [];
+  snapshot.forEach(doc => {
+    // We can cast the data to our User type, assuming the data in Firestore matches
+    users.push({ id: doc.id, ...doc.data() } as User);
+  });
+
+  return users;
+}
+
+export default async function UsersPage() {
+  // Call the server-side function to get the user data
+  const users = await getUsers();
 
   return (
     <div className="flex flex-col space-y-4">
-      <h1 className="text-2xl font-bold">User Management</h1>
+      <h1 className="text-2xl font-bold">User Management (Server Fetched)</h1>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>All Users</CardTitle>

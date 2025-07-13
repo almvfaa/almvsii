@@ -2,20 +2,29 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
+// Your web app's Firebase configuration is now read from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyCYiJw67SZS-OxvLz8SazmMqxqQwEtjalY",
-  authDomain: "almacen-de-viveres-sii.firebaseapp.com",
-  projectId: "almacen-de-viveres-sii",
-  storageBucket: "almacen-de-viveres-sii.appspot.com",
-  messagingSenderId: "131283692576",
-  appId: "1:131283692576:web:143805235252c7151ae045",
-  measurementId: "G-BXZYMT3NHH"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
 // We add a check to see if the app is already initialized to prevent errors during hot-reloads in Next.js
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+let app;
+if (!getApps().length) {
+  if (!firebaseConfig.projectId) {
+    throw new Error("Firebase project ID is not set. Please check your environment variables.");
+  }
+  app = initializeApp(firebaseConfig);
+} else {
+  app = getApp();
+}
+
 const db = getFirestore(app);
 
 export { app, db };

@@ -1,7 +1,41 @@
-# Settings to manage and configure a Firebase App Hosting backend.
-# https://firebase.google.com/docs/app-hosting/configure
+# Specifies the version of the App Hosting platform
+specVersion: v1alpha1
 
+# Specifies the location of the Next.js source code
+codebase:
+  # The path to the Next.js application
+  root: .
+
+# Specifies the build and runtime configuration
 runConfig:
-  # Increase this value if you'd like to automatically spin up
-  # more instances in response to increased traffic.
-  maxInstances: 1
+  # The amount of CPU to allocate to the server
+  cpu: 1
+  # The amount of memory in MiB to allocate to the server
+  memoryMiB: 512
+  # The number of concurrent requests to allow
+  concurrency: 80
+
+# Specifies environment variables
+env:
+  # Firebase configuration variables exposed as secrets
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    secret: FIREBASE_API_KEY
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    secret: FIREBASE_AUTH_DOMAIN
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    secret: FIREBASE_PROJECT_ID
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    secret: FIREBASE_STORAGE_BUCKET
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    secret: FIREBASE_MESSAGING_SENDER_ID
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    secret: FIREBASE_APP_ID
+  - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+    secret: FIREBASE_MEASUREMENT_ID
+
+# Specifies backend settings for App Hosting
+backend:
+  # The ID of the App Hosting backend
+  id: my-next-app
+  # The region to deploy the backend to
+  region: us-central1
